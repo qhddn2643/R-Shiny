@@ -1,0 +1,7 @@
+[1,"** Installing R Packages: 'ggplot2', 'shinythemes'\r\n"]
+[1,"\r\n"]
+[1,"\r\n"]
+[1,"\r\n"]
+[1,"[1/6] Installing gtable...\r\n"]
+[1,"\r\n"]
+[2,"Error: package 'gtable' is not available\r\nIn addition: Warning messages:\r\n1: could not retrieve available packages for url \"https://cran.rstudio.com/src/contrib\" \r\n2: could not retrieve available packages for url \"https://cran.rstudio.com/bin/windows/contrib/4.1\" \r\n3: curl: (35) schannel: next InitializeSecurityContext failed: Unknown error (0x80092012) - The revocation function was unable to check revocation for the certificate. \r\nTraceback (most recent calls last):\r\n10: sourceWithProgress(script = \"C:/Users/gyung/AppData/Local/Temp/798c-2872-0854-a4b0\", \r\n        encoding = \"UTF-8\", con = stdout(), importRdata = NULL, exportRdata = NULL)\r\n 9: eval(statements[[idx]], envir = sourceEnv)\r\n 8: eval(statements[[idx]], envir = sourceEnv)\r\n 7: renv::install(\"gtable\")\r\n 6: renv_retrieve(names(remotes))\r\n 5: handler(package, renv_retrieve_impl(package))\r\n 4: renv_retrieve_impl(package)\r\n 3: renv_available_packages_latest(record$Package)\r\n 2: stopf(\"package '%s' is not available\", package)\r\n 1: stop(sprintf(fmt, ...), call. = call.)\r\nExecution halted\r\n"]
