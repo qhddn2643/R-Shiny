@@ -1,7 +1,11 @@
 ## ui.R ##
-library(shiny)
 library(shinythemes)
 library(shinydashboard)
+library(shinyWidgets)
+library(DBI)
+library(pool)
+library(dplyr)
+library(RMySQL)
 
 dashboardPage(
   dashboardHeader(),
