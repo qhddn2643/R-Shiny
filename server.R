@@ -400,7 +400,6 @@ server <- function(input, output, session) {
                         LIKE '%", input$sigNetSearch, "%';")
       }
     }
-      
     dbGetQuery(conn, query)
   })
   
@@ -408,13 +407,46 @@ server <- function(input, output, session) {
     datatable(head(dfSigNet(), n = input$sigNetShow), options = list(dom = 't'))
   })
   
-  # row selection
-  #output$viewtbl0 = renderDataTable(dfSigNet(), server = FALSE, selection = 'single')
-  #output$viewtbl2 = renderPrint(input$viewtbl0_rows_selected)
-  
   output$downloadSigNet <- downloadHandler(
     filename = function() { paste("Signature_Network", "xlsx", sep = ".")},
     content = function(file) {write_xlsx(dfSigNet(), path = file)}
+  )
+  
+  # row selection
+  output$viewtbl0 = renderDataTable(dfSigNet(), server = FALSE, selection = 'single')
+  #output$viewtbl12 = renderPrint(input$viewtbl0_rows_selected)
+  
+  dfSigNet2 <- reactive({
+    renderPrint(input$viewtbl0_rows_selected)
+    conn <- dbConnect(
+      MySQL(),
+      dbname = "presibo",
+      host = "localhost",
+      username = "root",
+      password = "newrootpassword"
+    )
+    on.exit(dbDisconnect(conn), add = TRUE)
+    if (input$viewtbl0_rows_selected == 1) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m17;")
+      dbGetQuery(conn, query)
+    }
+    else if (input$viewtbl0_rows_selected == 2) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m2;")
+      dbGetQuery(conn, query)
+    }
+    else if (input$viewtbl0_rows_selected == 3) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m45;")
+      dbGetQuery(conn, query)
+    }
+  })
+  
+  output$viewtbl12_1 <- renderDataTable({
+    datatable(dfSigNet2(), options = list(dom = 't'))
+  })
+  
+  output$downloadSigNet2 <- downloadHandler(
+    filename = function() { paste("Signature_Network", "xlsx", sep = ".")},
+    content = function(file) {write_xlsx(dfSigNet2(), path = file)}
   )
   
   ##############Network Genetic Search##############  
@@ -514,15 +546,48 @@ server <- function(input, output, session) {
   })
   
   output$viewtbl <- renderDataTable({
-    datatable(head(dfNetGene()), options = list(dom = 't'))
+    datatable(dfNetGene(), options = list(dom = 't'))
   })
   
-  #output$viewtbl = renderDataTable(dfNetGene(), server = FALSE, selection = 'single')
-  #output$viewtbl2 = renderPrint(input$viewtbl_rows_selected)
+  output$viewtbl = renderDataTable(dfNetGene(), server = FALSE, selection = 'single')
+  output$viewtbl2 = renderPrint(input$viewtbl_rows_selected)
   
   output$downloadNetGene <- downloadHandler(
     filename = function() { paste("Network_Genetic", "xlsx", sep = ".")},
     content = function(file) {write_xlsx(dfNetGene(), path = file)}
+  )
+  
+  dfNetGene2 <- reactive({
+    renderPrint(input$viewtbl_rows_selected)
+    conn <- dbConnect(
+      MySQL(),
+      dbname = "presibo",
+      host = "localhost",
+      username = "root",
+      password = "newrootpassword"
+    )
+    on.exit(dbDisconnect(conn), add = TRUE)
+    if (input$viewtbl_rows_selected == 1) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m17;")
+      dbGetQuery(conn, query)
+    }
+    else if (input$viewtbl_rows_selected == 2) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m2;")
+      dbGetQuery(conn, query)
+    }
+    else if (input$viewtbl_rows_selected == 3) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m45;")
+      dbGetQuery(conn, query)
+    }
+  })
+  
+  output$viewtbl2_1 <- renderDataTable({
+    datatable(dfNetGene2(), options = list(dom = 't'))
+  })
+  
+  output$downloadNetGene2 <- downloadHandler(
+    filename = function() { paste("Signature_Network", "xlsx", sep = ".")},
+    content = function(file) {write_xlsx(dfNetGene2(), path = file)}
   )
   
   ##############Network Drug Search##############  
@@ -578,15 +643,47 @@ server <- function(input, output, session) {
   })
   
   output$viewtable1 <- renderDataTable({
-    datatable(head(dfNetDrug()), options = list(dom = 't'))
+    datatable(dfNetDrug(), options = list(dom = 't'))
   })
   
-  #output$viewtable1 = renderDataTable(dfNetDrug(), server = FALSE, selection = 'single')
+  output$viewtable1 = renderDataTable(dfNetDrug(), server = FALSE, selection = 'single')
   #output$viewtable12 = renderPrint(input$viewtable1_rows_selected)
   
   output$downloadNetDrug <- downloadHandler(
     filename = function() { paste("Network_Drug", "xlsx", sep = ".")},
     content = function(file) {write_xlsx(dfNetDrug(), path = file)}
+  )
+  
+  dfNetDrug2 <- reactive({
+    conn <- dbConnect(
+      MySQL(),
+      dbname = "presibo",
+      host = "localhost",
+      username = "root",
+      password = "newrootpassword"
+    )
+    on.exit(dbDisconnect(conn), add = TRUE)
+    if (input$viewtable1_rows_selected == 1) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m17;")
+      dbGetQuery(conn, query)
+    }
+    else if (input$viewtable1_rows_selected == 2) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m2;")
+      dbGetQuery(conn, query)
+    }
+    else if (input$viewtable1_rows_selected == 3) {
+      query <- paste0("SELECT * FROM presibo.module_genes_m45;")
+      dbGetQuery(conn, query)
+    }
+  })
+  
+  output$viewtable12_1 <- renderDataTable({
+    datatable(dfNetDrug2(), options = list(dom = 't'))
+  })
+  
+  output$downloadNetDrug2 <- downloadHandler(
+    filename = function() { paste("Signature_Network", "xlsx", sep = ".")},
+    content = function(file) {write_xlsx(dfNetDrug2(), path = file)}
   )
   
   ##############Indication Drug Search##############

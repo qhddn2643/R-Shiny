@@ -508,7 +508,9 @@ ui <- dashboardPage(
                          div(
                            style="overflow-x: auto;",
                            br(),
-                           verbatimTextOutput("viewtbl12")
+                           verbatimTextOutput("viewtbl12"),
+                           br(),
+                           dataTableOutput("viewtbl12_1")
                          ),
                          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
                          div(
@@ -639,8 +641,7 @@ ui <- dashboardPage(
                            div(
                              style="overflow-x: auto;",
                              br(),
-                             verbatimTextOutput("viewtbl2"),
-                             br()
+                             dataTableOutput("viewtbl2_1")
                            ),
                            div(style="display: inline-block;vertical-align:top; width: 50px;"),
                            div(
@@ -731,7 +732,8 @@ ui <- dashboardPage(
                              style="overflow-x: auto;",
                              br(),
                              verbatimTextOutput("viewtable12"),
-                             br()
+                             br(),
+                             dataTableOutput("viewtable12_1")
                            )
                          )
                 )
