@@ -1,0 +1,11 @@
+name: presibo
+title:
+username:
+account: bjeon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4463847
+bundleId: 4895851
+url: https://bjeon.shinyapps.io/presibo/
+when: 1628267742.5892
+lastSyncTime: 1628267742.5892

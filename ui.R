@@ -102,6 +102,7 @@ ui <- dashboardPage(
                             width = "400px"),
                 br(),br(),
                 tabsetPanel(
+                  # Target Overview
                   tabPanel("Overview",
                            ui <- fluidRow(
                              column(3,
@@ -153,6 +154,7 @@ ui <- dashboardPage(
                              )
                            )
                   ),
+                  # Target Predictor
                   tabPanel("Predictor",
                            ui <- fluidPage(
                              div(
@@ -195,7 +197,7 @@ ui <- dashboardPage(
                                br(),
                                searchInput(
                                  inputId = "predSearch", label = "Search ",
-                                 placeholder = "10",
+                                 placeholder = "ex) rs78286437",
                                  width = "150px"
                                )
                              ),
@@ -208,6 +210,9 @@ ui <- dashboardPage(
                              div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
                              div(
                                style="overflow-x: auto;",
+                               br(),
+                               br(),
+                               textOutput("tbl_selected"),
                                br(),
                                dataTableOutput("tbl"),
                                br()
@@ -278,7 +283,7 @@ ui <- dashboardPage(
                                br(),
                                searchInput(
                                  inputId = "sigSearch", label = "Search ",
-                                 placeholder = "10",
+                                 placeholder = "ex) Brain, Tissue",
                                  width = "150px"
                                )
                              ),
@@ -293,7 +298,7 @@ ui <- dashboardPage(
                                style="overflow-x: auto;",
                                br(),
                                dataTableOutput("view"),
-                               br()
+                               br(), br(), br(), br()
                              ),
                              div(style="display: inline-block;vertical-align:top; width: 0px;",HTML("<br>")),
                              div(
@@ -325,7 +330,7 @@ ui <- dashboardPage(
                                br(),
                                searchInput(
                                  inputId = "sigSearch2", label = "Search ",
-                                 placeholder = "10",
+                                 placeholder = "ex) Brain, Tissue",
                                  width = "150px"
                                )
                              ),
@@ -425,7 +430,7 @@ ui <- dashboardPage(
                          div(
                            style="display: inline-block;vertical-align:top;",
                            br(),
-                           p("Signature based networks contain ", strong("APOE", style = "color:orange; font-size:17px"), style = "font-size:17px")
+                           textOutput("sgn_output1")
                          ),
                          div(style="display: inline-block;vertical-align:top; width: 20px;",HTML("<br>")),
                          div(
@@ -451,7 +456,7 @@ ui <- dashboardPage(
                            br(),
                            searchInput(
                              inputId = "sigNetSearch", label = "Search ",
-                             placeholder = "10",
+                             placeholder = "ex) APOE, M17",
                              width = "150px"
                            )
                          ),
@@ -464,19 +469,20 @@ ui <- dashboardPage(
                          div(
                            style="overflow-x: auto;",
                            br(),
-                           dataTableOutput("viewtbl0")
+                           dataTableOutput("viewtbl0"),
+                           br(), br(), br(), br()
                          ),
                          div(
                            style="display: inline-block;vertical-align:top;",
                            br(),
-                           p("Signature profiles of genes in ", strong("M2", style = "color:orange; font-size:17px"), style = "font-size:17px")
+                           textOutput("sgn_output2")
                          ),
                          div(style="display: inline-block;vertical-align:top; width: 75px;",HTML("<br>")),
                          div(
                            style="display: inline-block;vertical-align:top;",
                            br(),
                            searchInput(
-                             inputId = "sigNet2", label = "Filter: Z-Summary < ",
+                             inputId = "sigNet2", label = "Filter: P < ",
                              placeholder = "0.05",
                              width = "450px"
                            )
@@ -495,7 +501,7 @@ ui <- dashboardPage(
                            br(),
                            searchInput(
                              inputId = "sigNetSearch2", label = "Search ",
-                             placeholder = "10",
+                             placeholder = "ex) DPM1, NIPAL3",
                              width = "150px"
                            )
                          ),
@@ -507,8 +513,6 @@ ui <- dashboardPage(
                          ),
                          div(
                            style="overflow-x: auto;",
-                           br(),
-                           verbatimTextOutput("viewtbl12"),
                            br(),
                            dataTableOutput("viewtbl12_1")
                          ),
@@ -590,7 +594,7 @@ ui <- dashboardPage(
                              br(),
                              searchInput(
                                inputId = "sigGeneSearch", label = "Search ",
-                               placeholder = "10",
+                               placeholder = "ex) APOE, M17",
                                width = "150px"
                              )
                            ),
@@ -605,19 +609,19 @@ ui <- dashboardPage(
                              style="overflow-x: auto;",
                              br(),
                              dataTableOutput("viewtbl"),
-                             br()
+                             br(), br(), br(), br()
                            ),
                            div(
                              style="display: inline-block;vertical-align:top;",
                              br(),
-                             p("Association with ", strong("M2", style = "color:orange; font-size:17px"), "-PRSs", style = "font-size:17px")
+                             #textOutput("ngs_output2")
                            ),
                            div(style="display: inline-block;vertical-align:top; width: 330px;",HTML("<br>")),
                            div(
                              style="display: inline-block;vertical-align:top;",
                              br(),
                              searchInput(
-                               inputId = "netGene2", label = "Filter: Z-Summary < ",
+                               inputId = "netGene2", label = "Filter: P < ",
                                placeholder = "0.05",
                                width = "450px"
                              )
@@ -628,7 +632,7 @@ ui <- dashboardPage(
                              br(),
                              searchInput(
                                inputId = "sigGeneSearch2", label = "Search ",
-                               placeholder = "10",
+                               placeholder = "ex) DPM1, NIPAL3",
                                width = "150px"
                              )
                            ),
@@ -639,9 +643,10 @@ ui <- dashboardPage(
                              downloadButton("downloadNetGene2", "Download Table")
                            ),
                            div(
-                             style="overflow-x: auto;",
+                             style="overflow-x: auto; display: none",
                              br(),
-                             dataTableOutput("viewtbl2_1")
+                             dataTableOutput("viewtbl2_1"),
+                             br()
                            ),
                            div(style="display: inline-block;vertical-align:top; width: 50px;"),
                            div(
@@ -689,7 +694,7 @@ ui <- dashboardPage(
                              br(),
                              searchInput(
                                inputId = "sigDrugSearch", label = "Search ",
-                               placeholder = "10",
+                               placeholder = "ex) APOE, M17",
                                width = "150px"
                              )
                            ),
@@ -704,12 +709,12 @@ ui <- dashboardPage(
                              style="overflow-x: auto;",
                              br(),
                              dataTableOutput("viewtable1"),
-                             br()
+                             br(), br(), br(), br()
                            ),
                            div(
                              style="display: inline-block;vertical-align:top;",
                              br(),
-                             p("Approved drugs targeting genes in ", strong("M2", style = "color:orange; font-size:17px"), style = "font-size:17px")
+                             textOutput("ngd_output2")
                            ),
                            div(style="display: inline-block;vertical-align:top; width: 300px;",HTML("<br>")),
                            div(
@@ -717,7 +722,7 @@ ui <- dashboardPage(
                              br(),
                              searchInput(
                                inputId = "sigDrugSearch2", label = "Search ",
-                               placeholder = "10",
+                               placeholder = "ex) actarit, diarrhea",
                                width = "150px"
                              )
                            ),
@@ -731,8 +736,6 @@ ui <- dashboardPage(
                            div(
                              style="overflow-x: auto;",
                              br(),
-                             verbatimTextOutput("viewtable12"),
-                             br(),
                              dataTableOutput("viewtable12_1")
                            )
                          )
@@ -744,74 +747,39 @@ ui <- dashboardPage(
       tabItem(tabName = "drug",
               searchInput(inputId = "drugSearch", 
                           label = "Gene name", 
-                          placeholder = "ADRA2A",
+                          placeholder = "APOE",
                           btnSearch = "Search"),
               br(),br(),
-              tabsetPanel(
-                tabPanel("Indication Based Search",
-                         div(
-                           style="display: inline-block;vertical-align:top;",
-                           br(),
-                           searchInput(inputId = "IndicSearch", 
-                                       label = "Indication: ", 
-                                       placeholder = "Alzheimer’s disease",
-                                       btnSearch = "Search")
-                         ),
-                         div(style="display: inline-block;vertical-align:top; width: 100px;"),
-                         div(
-                           style="display: inline-block;vertical-align:top;",
-                           br(),
-                           searchInput(inputId = "searchInd", 
-                                       label = "Search", 
-                                       placeholder = "10")
-                         ),
-                         div(style="display: inline-block;vertical-align:top; width: 100px;"),
-                         div(
-                           style="display: inline-block;vertical-align:top;",
-                           br(),
-                           downloadButton("downloadIndic", "Download Table")
-                         ),
-                         div(style="display: inline-block;vertical-align:top; width: 200px;",HTML("<br>")),
-                         div(
-                           style="overflow-x: auto;",
-                           br(),
-                           dataTableOutput("viewtable2"),
-                           br()
-                         )
-                ),
-                tabPanel("MOA Based Search",
-                         div(
-                           style="display: inline-block;vertical-align:top;",
-                           br(),
-                           searchInput(inputId = "MOAsearch", 
-                                       label = "Mechanism of Action (MOA): ", 
-                                       placeholder = "Inhibitor",
-                                       btnSearch = "Search")
-                         ),
-                         div(style="display: inline-block;vertical-align:top; width: 100px;"),
-                         div(
-                           style="display: inline-block;vertical-align:top;",
-                           br(),
-                           searchInput(inputId = "searchMOA", 
-                                       label = "Search", 
-                                       placeholder = "10")
-                         ),
-                         div(style="display: inline-block;vertical-align:top; width: 100px;",HTML("<br>")),
-                         div(
-                           style="display: inline-block;vertical-align:top;",
-                           br(),
-                           downloadButton("downloadMOA", "Download Table")
-                         ),
-                         div(style="display: inline-block;vertical-align:top; width: 100px;",HTML("<br>")),
-                         div(
-                           style="overflow-x: auto;",
-                           br(),
-                           dataTableOutput("viewtable3"),
-                           br()
-                         )
-                )
+              div(
+                style="display: inline-block;vertical-align:top;",
+                br(),
+                searchInput(inputId = "searchInd", 
+                            label = "Search ", 
+                            placeholder = "ex) actarit, diarrhea",
+                            btnSearch = "Search")
+              ),
+              div(style="display: inline-block;vertical-align:top; width: 100px;"),
+              div(
+                style="display: inline-block;vertical-align:top;",
+                br(),
+                numericInput(inputId = "showInd", 
+                            label = "Show", 
+                            value = 10)
+              ),
+              div(style="display: inline-block;vertical-align:top; width: 100px;"),
+              div(
+                style="display: inline-block;vertical-align:top;",
+                br(),
+                downloadButton("downloadIndic", "Download Table")
+              ),
+              div(style="display: inline-block;vertical-align:top; width: 200px;",HTML("<br>")),
+              div(
+                style="overflow-x: auto;",
+                br(),
+                dataTableOutput("viewtable2"),
+                br()
               )
-      ),
+          ),
       
       # AI/ML Search content
       tabItem(tabName = "aiml"
