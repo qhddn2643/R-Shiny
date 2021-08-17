@@ -29,6 +29,10 @@ ui <- dashboardPage(
       tags$style(type="text/css", "label{ display: table-cell; text-align: right; vertical-align: middle;} .form-group { display: table-row;}"),
       tags$style(type="text/css", "label.control-label, .selectize-control.single{ display: table-cell; text-align: center; vertical-align: middle;} .form-group { display: table-row;}")
     ),
+    tags$head(tags$style("#tbl_selected{color: orange; font-size: 17px;}")),
+    tags$head(tags$style("#sgn_output1{color: orange; font-size: 17px;}")),
+    tags$head(tags$style("#sgn_output2{color: orange; font-size: 17px;}")),
+    tags$head(tags$style("#ngd_output2{color: orange; font-size: 17px;}")),
     tabItems(
       # PreSiBO Home content
       tabItem(tabName = "home",
@@ -606,7 +610,7 @@ ui <- dashboardPage(
                            ),
                            div(style="display: inline-block;vertical-align:top; width: 155px;",HTML("<br>")),
                            div(
-                             style="overflow-x: auto;",
+                             style="overflow-x: auto; overflow-y: auto;",
                              br(),
                              dataTableOutput("viewtbl"),
                              br(), br(), br(), br()
@@ -643,7 +647,7 @@ ui <- dashboardPage(
                              downloadButton("downloadNetGene2", "Download Table")
                            ),
                            div(
-                             style="overflow-x: auto; display: none",
+                             style="overflow-x: auto; overflow-y: auto; display: none",
                              br(),
                              dataTableOutput("viewtbl2_1"),
                              br()

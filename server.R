@@ -321,7 +321,7 @@ server <- function(input, output, session) {
     content = function(file) {write_xlsx(dfSig2(), path = file)}
   )
   
-  ##############Signature Network Search##############
+  ##############Signature Guided Network Search##############
   dfSigNet <- reactive({
     conn <- dbConnect(
       MySQL(),
@@ -425,15 +425,15 @@ server <- function(input, output, session) {
   #output$viewtbl12 = renderPrint(input$viewtbl0_rows_selected)
   
   output$sgn_output2 <- renderText({ 
-    if (input$viewtbl0_rows_selected == 1) {
+    
+    if (input$viewtbl0_rows_selected == 1) 
       paste("Signature profiles of genes in M17")
-    }
-    else if (input$viewtbl0_rows_selected == 2) {
+    else if (input$viewtbl0_rows_selected == 2) 
       paste("Signature profiles of genes in M2")
-    }
-    else if (input$viewtbl0_rows_selected == 3) {
+    else if (input$viewtbl0_rows_selected == 3)
       paste("Signature profiles of genes in M45")
-    }
+    else if (input$viewtbl0_rows_selected == NULL)
+      paste("Signature profiles of genes in")
   })
   
   dfSigNet2 <- reactive({
@@ -484,7 +484,7 @@ server <- function(input, output, session) {
     content = function(file) {write_xlsx(dfSigNet2(), path = file)}
   )
   
-  ##############Network Genetic Search##############  
+  ##############Network Guided Genetic Search##############  
   dfNetGene <- reactive({
     conn <- dbConnect(
       MySQL(),
@@ -494,7 +494,7 @@ server <- function(input, output, session) {
       password = "newrootpassword"
     )
     on.exit(dbDisconnect(conn), add = TRUE)
-    if (input$sigNet != "") {
+    if (input$netGene != "") {
       query <- paste0("SELECT 
                           `Gene ID`, 
                           Type, 
@@ -506,7 +506,7 @@ server <- function(input, output, session) {
                           `AD GWAS Pval`
                       FROM junming_ampad_blood_network_transcriptome_dx_all 
                       WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` < '", input$netGene, "';")
-      if (input$sigNetSearch != "") {
+      if (input$sigGeneSearch != "") {
         query <- paste0("SELECT 
                           `Gene ID`, 
                           Type, 
@@ -542,7 +542,7 @@ server <- function(input, output, session) {
                           `AD GWAS Pval`
                       FROM junming_ampad_blood_network_transcriptome_dx_all 
                       WHERE `Gene ID` = '", input$netSearch, "';")
-      if (input$sigNetSearch != "") {
+      if (input$sigGeneSearch != "") {
         query <- paste0("SELECT 
                           `Gene ID`, 
                           Type, 
