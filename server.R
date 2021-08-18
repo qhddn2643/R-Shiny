@@ -342,7 +342,7 @@ server <- function(input, output, session) {
                           Source, `AD Pval`, 
                           `AD GWAS Pval`
                       FROM networksearch 
-                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` < '", input$sigNet, "';")
+                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` > '", input$sigNet, "';")
       if (input$sigNetSearch != "") {
         query <- paste0("SELECT 
                           `Gene ID`, 
@@ -354,7 +354,7 @@ server <- function(input, output, session) {
                           Source, `AD Pval`, 
                           `AD GWAS Pval`
                       FROM networksearch 
-                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` < '", input$sigNet, "' AND 
+                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` > '", input$sigNet, "' AND 
                         CONCAT(`Gene ID`, 
                           Type, 
                           `Module ID`, 
@@ -505,7 +505,7 @@ server <- function(input, output, session) {
                           Source, `AD Pval`, 
                           `AD GWAS Pval`
                       FROM junming_ampad_blood_network_transcriptome_dx_all 
-                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` < '", input$netGene, "';")
+                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` > '", input$netGene, "';")
       if (input$sigGeneSearch != "") {
         query <- paste0("SELECT 
                           `Gene ID`, 
@@ -517,7 +517,7 @@ server <- function(input, output, session) {
                           Source, `AD Pval`, 
                           `AD GWAS Pval`
                       FROM junming_ampad_blood_network_transcriptome_dx_all 
-                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` < '", input$netGene, "' AND 
+                      WHERE `Gene ID` = '", input$netSearch, "' AND `Z-Summary` > '", input$netGene, "' AND 
                         CONCAT(`Gene ID`, 
                           Type, 
                           `Module ID`, 
@@ -775,15 +775,12 @@ server <- function(input, output, session) {
       password = "newrootpassword"
     )
     on.exit(dbDisconnect(conn), add = TRUE)
-    if(input$drugSearch != '') {
-      query <- paste0("SELECT gene_id, drug_name, indication, moa, presibo_db_id, drugbank_id FROM drugdb WHERE gene_id = '", input$drugSearch, "';")
-      if (input$searchInd != '') {
-        query <- paste0("SELECT gene_id, drug_name, indication, moa, presibo_db_id, drugbank_id 
+    if (input$searchInd != '') {
+      query <- paste0("SELECT gene_id, drug_name, indication, moa, presibo_db_id, drugbank_id 
                        FROM drugdb 
-                       WHERE gene_id = '", input$drugSearch, "' AND CONCAT(gene_id, drug_name, indication, moa, presibo_db_id, drugbank_id) LIKE '%", input$searchInd, "%';")
-      }
-      dbGetQuery(conn, query)
+                       WHERE CONCAT(gene_id, drug_name, indication, moa, presibo_db_id, drugbank_id) LIKE '%", input$searchInd, "%';")
     }
+    dbGetQuery(conn, query)
   })
   
   output$viewtable2 <- renderDataTable({

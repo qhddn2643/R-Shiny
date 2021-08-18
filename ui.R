@@ -33,6 +33,7 @@ ui <- dashboardPage(
     tags$head(tags$style("#sgn_output1{color: orange; font-size: 17px;}")),
     tags$head(tags$style("#sgn_output2{color: orange; font-size: 17px;}")),
     tags$head(tags$style("#ngd_output2{color: orange; font-size: 17px;}")),
+    
     tabItems(
       # PreSiBO Home content
       tabItem(tabName = "home",
@@ -441,7 +442,7 @@ ui <- dashboardPage(
                            style="display: inline-block;vertical-align:top;",
                            br(),
                            searchInput(
-                             inputId = "sigNet", label = "Filter: Z-Summary < ",
+                             inputId = "sigNet", label = "Filter: Z-Summary > ",
                              placeholder = "0.05",
                              width = "450px",
                            )
@@ -587,7 +588,7 @@ ui <- dashboardPage(
                              style="display: inline-block;vertical-align:top;",
                              br(),
                              searchInput(
-                               inputId = "netGene", label = "Filter: Z-Summary < ",
+                               inputId = "netGene", label = "Filter: Z-Summary > ",
                                placeholder = "0.05",
                                width = "450px"
                              )
@@ -749,17 +750,12 @@ ui <- dashboardPage(
       
       # Drug Search content
       tabItem(tabName = "drug",
-              searchInput(inputId = "drugSearch", 
-                          label = "Gene name", 
-                          placeholder = "APOE",
-                          btnSearch = "Search"),
-              br(),br(),
               div(
                 style="display: inline-block;vertical-align:top;",
                 br(),
                 searchInput(inputId = "searchInd", 
                             label = "Search ", 
-                            placeholder = "ex) actarit, diarrhea",
+                            placeholder = "ex) APOE",
                             btnSearch = "Search")
               ),
               div(style="display: inline-block;vertical-align:top; width: 100px;"),
